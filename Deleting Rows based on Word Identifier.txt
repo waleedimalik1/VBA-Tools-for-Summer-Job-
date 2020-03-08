@@ -1,0 +1,18 @@
+Sub Option2()
+
+    Call DeleteRows(ActiveSheet.Range("A1:A65536"), "Bob", "")
+    Call DeleteRows(ActiveSheet.Range("A1:A65536"), "Sue", "Sally")
+
+End Sub
+
+Sub DeleteRows(ByVal rng As Range, ByVal term As String, ByVal exception As String)
+
+    Dim c As Range
+    Do
+        Set c = rng.Find(What:=term, After:=Range("A1"), LookIn:=xlValues, LookAt:=xlPart, SearchDirection:=xlPrevious)
+        If Not c Is Nothing Then
+            If InStr(LCase$(c.Value2), LCase$(exception)) = 0 Then c.EntireRow.Delete
+        End If
+    Loop While Not c Is Nothing
+
+End Sub
